@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 1 - Text File</title>
+</head>
+<body>
+    <button id="button">Get Text File</button>
+    <br><br>
+    <div id="text"></div>
+
+    <script>
+    // Create an event listener
+    document.getElementById('button').addEventListener('click', loadText); // We passed the #button from the DOM & were listening for a click
+      // Once we hear the click, we're going to execute the function loadText
+    function loadText(){
+        // Create an XHR object
+        const xhr = new XMLHttpRequest();
+        // We need a Function to make a reqest:
+        // What type of request are we making?
+        // Where file or url are we making the request to?
+        //OPEN function => 3 Params: TYPE, URL/FILE, ASYNC
+        xhr.open('GET', 'sample.txt', true);
+
+        // OPTIONAL - used to make a 'Spinning Wheel of Death'
+        xhr.onprogress = function(){
+            console.log('READYSTATE: ', xhr.readyState);
+            // readySTATE Values
+            // 0: request not initialized
+            // 1: server connection established
+            // 2: request received
+            // 3: processing request
+            // 4: request finished and response is ready
+        }
+
+        xhr.onload = function(){
+            if(this.status == 200){
+        // HTTP Statuses
+        // 200: "OK"
+        // 403: "FORBIDDEN"
+        // 404: "NOT FOUND"
+        // console.log(this.responseText);
+            document.getElementById('text').innerHTML = this.responseText;
+            } elseif(this.status = 404){
+                document.getElementById('text').innerHMTL = 'NOT FOUND';
+            }
+        } 
+
+        xhr.onerror = function(){
+            console.log('Request Error...')
+        }
+    
+        //Sends request
+        xhr.send();
+        }
+
+
+
+    </script>
+</body>
+</html>
